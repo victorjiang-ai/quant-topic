@@ -1,0 +1,16 @@
+# 基础依赖
+pyyaml>=5.4.0
+jinja2>=3.0.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# 飞书相关
+lark-cli>=0.0.1
+
+# 数据处理
+pandas>=2.0.0
+numpy>=1.24.0
+
+# 时间与日期
+python-dateutil>=2.8.0

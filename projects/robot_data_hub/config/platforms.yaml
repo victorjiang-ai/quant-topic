@@ -1,0 +1,70 @@
+# 多平台采集配置
+platforms:
+  # 抖音
+  douyin:
+    enabled: true
+    name: 抖音
+    base_url: https://www.douyin.com
+    keywords:
+      - 人形机器人
+      - Optimus
+      - 宇树
+      - 智元机器人
+      - 波士顿动力
+      - 机器人概念股
+      - 机器人产业链
+
+  # 小红书
+  xiaohongshu:
+    enabled: true
+    name: 小红书
+    base_url: https://www.xiaohongshu.com
+    keywords:
+      - 人形机器人
+      - Optimus
+      - 宇树
+      - 机器人行业
+      - 机器人投资
+
+  # 微博
+  weibo:
+    enabled: true
+    name: 微博
+    base_url: https://weibo.com
+    keywords:
+      - 人形机器人
+      - Optimus
+      - 宇树机器人
+      - 智元
+      - 机器人产业链
+
+  # 知乎
+  zhihu:
+    enabled: true
+    name: 知乎
+    base_url: https://www.zhihu.com
+    keywords:
+      - 人形机器人
+      - Optimus
+      - 机器人行业
+      - 机器人投资
+
+collection:
+  max_items_per_platform: 50
+  min_content_length: 20
+  auto_collect: false
+  collect_interval_hours: 24
+
+output:
+  local:
+    enabled: true
+    directory: ./collections
+  feishu:
+    enabled: true
+    base_app_token: LUxTbFO6EaD1LnsP5QFcWbb3nyc  # 机器人产业链知识库
+    table_name: 舆情采集
+
+analysis:
+  sentiment_analysis: true
+  hot_keywords_extraction: true
+  trend_tracking: true
