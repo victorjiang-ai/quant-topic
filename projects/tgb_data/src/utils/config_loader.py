@@ -28,6 +28,20 @@ class ConfigLoader:
         self._templates_config = None
         self._settings_config = None
     
+    def _load_full_bloggers_config(self) -> Dict[str, Any]:
+        """
+        加载完整的博主配置（包括collection/summary等）
+        
+        Returns:
+            完整配置字典
+        """
+        if self._bloggers_config is None:
+            config_file = self.config_dir / 'bloggers.yaml'
+            with open(config_file, 'r', encoding='utf-8') as f:
+                self._bloggers_config = yaml.safe_load(f)
+        
+        return self._bloggers_config or {}
+    
     def load_bloggers(self) -> List[Dict[str, Any]]:
         """
         加载博主列表配置
@@ -35,12 +49,8 @@ class ConfigLoader:
         Returns:
             博主列表
         """
-        if self._bloggers_config is None:
-            config_file = self.config_dir / 'bloggers.yaml'
-            with open(config_file, 'r', encoding='utf-8') as f:
-                self._bloggers_config = yaml.safe_load(f)
-        
-        return self._bloggers_config.get('bloggers', [])
+        config = self._load_full_bloggers_config()
+        return config.get('bloggers', [])
     
     def get_enabled_bloggers(self) -> List[Dict[str, Any]]:
         """
@@ -97,8 +107,8 @@ class ConfigLoader:
         Returns:
             采集配置字典
         """
-        bloggers_config = self.load_bloggers()
-        return bloggers_config.get('collection', {})
+        config = self._load_full_bloggers_config()
+        return config.get('collection', {})
     
     def get_summary_config(self) -> Dict[str, Any]:
         """
@@ -107,8 +117,8 @@ class ConfigLoader:
         Returns:
             总结配置字典
         """
-        bloggers_config = self.load_bloggers()
-        return bloggers_config.get('summary', {})
+        config = self._load_full_bloggers_config()
+        return config.get('summary', {})
     
     def update_blogger(self, blogger_id: str, updates: Dict[str, Any]) -> bool:
         """
@@ -121,7 +131,8 @@ class ConfigLoader:
         Returns:
             是否更新成功
         """
-        bloggers = self.load_bloggers()
+        config = self._load_full_bloggers_config()
+        bloggers = config.get('bloggers', [])
         
         for blogger in bloggers:
             if blogger.get('id') == blogger_id:
@@ -143,13 +154,12 @@ class ConfigLoader:
         Returns:
             是否添加成功
         """
-        if self._bloggers_config is None:
-            self.load_bloggers()
+        config = self._load_full_bloggers_config()
         
-        if 'bloggers' not in self._bloggers_config:
-            self._bloggers_config['bloggers'] = []
+        if 'bloggers' not in config:
+            config['bloggers'] = []
         
-        self._bloggers_config['bloggers'].append(blogger)
+        config['bloggers'].append(blogger)
         
         config_file = self.config_dir / 'bloggers.yaml'
         with open(config_file, 'w', encoding='utf-8') as f:
@@ -167,16 +177,15 @@ class ConfigLoader:
         Returns:
             是否删除成功
         """
-        if self._bloggers_config is None:
-            self.load_bloggers()
+        config = self._load_full_bloggers_config()
         
-        original_length = len(self._bloggers_config.get('bloggers', []))
-        self._bloggers_config['bloggers'] = [
-            b for b in self._bloggers_config.get('bloggers', [])
+        original_length = len(config.get('bloggers', []))
+        config['bloggers'] = [
+            b for b in config.get('bloggers', [])
             if b.get('id') != blogger_id
         ]
         
-        if len(self._bloggers_config['bloggers']) < original_length:
+        if len(config['bloggers']) < original_length:
             config_file = self.config_dir / 'bloggers.yaml'
             with open(config_file, 'w', encoding='utf-8') as f:
                 yaml.dump(self._bloggers_config, f, allow_unicode=True, default_flow_style=False)

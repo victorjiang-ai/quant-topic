@@ -64,7 +64,7 @@ class FeishuOutput:
         doc_content = self._generate_collection_content(date, contents, blogger_data)
         
         command = [
-            'lark-cli', 'docs', 'create',
+            'lark-cli', 'docs', '+create',
             '--title', f'{date} 博主原文合集',
             '--content', doc_content,
             '--folder', self.collection_folder,
@@ -99,7 +99,7 @@ class FeishuOutput:
         doc_content = self._generate_report_content(date, report_data, report_type)
         
         command = [
-            'lark-cli', 'docs', 'create',
+            'lark-cli', 'docs', '+create',
             '--title', f'{date} {report_type}复盘报告',
             '--content', doc_content,
             '--folder', self.report_folder,
