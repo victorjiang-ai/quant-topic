@@ -1,0 +1,27 @@
+paths:
+  local_base: "/Users/victorjiang/projects/tgb_data"
+  
+  collection_template: "templates/collection_template.md"
+  collection_output: "collections/{date}"
+  
+  report_template: "templates/report_template.md"
+  report_output: "reports/{date}"
+  
+  feishu_base: "Quant/Tgb_data"
+  feishu_collection_folder: "博主原文合集"
+  feishu_report_folder: "复盘报告"
+
+template_variables:
+  collection:
+    - date
+    - blogger_count
+    - posts_count
+    - contents
+  
+  report:
+    - date
+    - report_type
+    - summary
+    - key_points
+    - recommendations
+    - risk_warnings

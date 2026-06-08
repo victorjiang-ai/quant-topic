@@ -1,0 +1,44 @@
+# 博主列表配置文件
+# 用于管理关注的博主信息，可独立修改
+
+bloggers:
+  - id: blogger_001
+    name: "博主A"
+    platform: "weibo"
+    url: "https://weibo.com/u/xxx"
+    tags:
+      - "技术分析"
+      - "短线"
+    enabled: true
+    description: "擅长技术分析和短线操作"
+
+  - id: blogger_002
+    name: "博主B"
+    platform: "wechat"
+    account: "xxx"
+    tags:
+      - "价值投资"
+      - "长线"
+    enabled: true
+    description: "专注价值投资和长线布局"
+
+  - id: blogger_003
+    name: "博主C"
+    platform: "xueqiu"
+    url: "https://xueqiu.com/u/xxx"
+    tags:
+      - "宏观分析"
+      - "行业研究"
+    enabled: true
+    description: "宏观分析和行业研究"
+
+collection:
+  max_posts_per_blogger: 50
+  content_min_length: 100
+  include_images: true
+  include_comments: false
+
+summary:
+  max_length: 200
+  language: "zh-CN"
+  include_keywords: true

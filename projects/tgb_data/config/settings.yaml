@@ -1,0 +1,70 @@
+project:
+  name: "TGB量化数据采集系统"
+  version: "1.0.0"
+  author: "Victor"
+  description: "采集博主原文并生成复盘报告的量化系统"
+
+environment:
+  python_version: "3.8+"
+  timezone: "Asia/Shanghai"
+  debug: false
+
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/quant_tgb.log"
+  max_bytes: 10485760
+  backup_count: 5
+
+output:
+  local:
+    enabled: true
+    format: "markdown"
+    encoding: "utf-8"
+    create_subdirs: true
+  
+  feishu:
+    enabled: true
+    notify: false
+    share_mode: "closed"
+
+automation:
+  daily_run_time: "08:00"
+  
+  weekend:
+    include_friday: true
+    include_saturday: false
+    include_sunday: true
+  
+  retry:
+    max_attempts: 3
+    retry_delay: 60
+
+collection_strategy:
+  time_range:
+    daily: "previous_day"
+    weekend: "friday_to_sunday"
+  
+  filters:
+    min_length: 50
+    exclude_keywords: ["广告", "推广", "抽奖"]
+    include_only_finance: true
+  
+  update:
+    incremental: true
+    full_refresh_days: 7
+
+report_generation:
+  types:
+    - daily
+    - weekly
+    - monthly
+  
+  summary_depth:
+    blogger_level: true
+    content_level: true
+    sentiment_analysis: false
+  
+  trading_signals:
+    extract_keywords: true
+    sentiment_threshold: 0.6
